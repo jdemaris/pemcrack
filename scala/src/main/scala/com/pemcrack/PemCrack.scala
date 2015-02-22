@@ -1,7 +1,11 @@
 package com.pemcrack
 
+import java.security.Security
+
 import akka.actor.{ActorSystem, Props}
 import java.nio.file.{Paths, Files}
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 
 object PemCrack {
   def main(args: Array[String]): Unit = {
@@ -13,7 +17,7 @@ object PemCrack {
     }
 
     else {
-      println("Spooling up to crack file: " + args(0))
+      Security.addProvider(new BouncyCastleProvider());
       val system = ActorSystem("pemcrack")
       system.actorOf(Props[PemCrackManager]) ! CrackFile(args(0))
     }
