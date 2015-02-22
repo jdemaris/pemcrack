@@ -1,6 +1,6 @@
 package com.pemcrack
 
-import java.io.FileReader
+import java.io.StringReader
 import java.security.KeyPair
 
 import akka.actor.Actor
@@ -13,10 +13,10 @@ class DefaultPasswordFinder(password: String) extends PasswordFinder {
 class PemCrackWorker extends Actor {
   def receive = {
     case attempt: CrackAttempt => {
-      val fileReader: FileReader = new FileReader(attempt.pem)
-      val r: PEMReader = new PEMReader(fileReader, new DefaultPasswordFinder(attempt.passwordGuess))
+      val reader = new StringReader(attempt.pem)
+      val r: PEMReader = new PEMReader(reader, new DefaultPasswordFinder(attempt.passwordGuess))
       try {
-        val result = r.readObject().asInstanceOf[KeyPair]
+        r.readObject().asInstanceOf[KeyPair]
         sender() ! CrackResult(attempt.passwordGuess, true)
       } catch {
         case e: Throwable => {
@@ -24,7 +24,7 @@ class PemCrackWorker extends Actor {
         }
       } finally {
         r.close()
-        fileReader.close()
+        reader.close()
       }
     }
   }
