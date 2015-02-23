@@ -15,5 +15,6 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.9",
   "com.typesafe.akka" %% "akka-cluster" % "2.3.9",
-  "bouncycastle" % "bcprov-jdk16" % "140"
+  "bouncycastle" % "bcprov-jdk16" % "140",
+  "org.specs2" %% "specs2-core" % "2.4.15" % "test"
 )
