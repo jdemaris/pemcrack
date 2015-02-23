@@ -45,6 +45,18 @@ class PasswordGeneratorTest extends Specification {
 
     "have combinations equal to alphabet length squared" in {
       generator.combinations must beEqualTo(BigDecimal(Math.pow(alphabet.length, 2)))
+      val iterator = generator.iterator
+      iterator.hasNext must beTrue
+      iterator.next.equals("prefixaa") must beTrue
+      iterator.next.equals("prefixab") must beTrue
+      iterator.next.equals("prefixac") must beTrue
+      iterator.next.equals("prefixba") must beTrue
+      iterator.next.equals("prefixbb") must beTrue
+      iterator.next.equals("prefixbc") must beTrue
+      iterator.next.equals("prefixca") must beTrue
+      iterator.next.equals("prefixcb") must beTrue
+      iterator.next.equals("prefixcc") must beTrue
+      iterator.hasNext must beFalse
     }
   }
 }
